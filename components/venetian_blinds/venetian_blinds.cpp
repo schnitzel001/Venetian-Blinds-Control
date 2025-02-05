@@ -100,7 +100,13 @@ void VenetianBlinds::loop() {
   this->recompute_position_();
 
   if (this->is_at_target_()) {
-    this->start_direction_(COVER_OPERATION_IDLE);
+    if (this->has_built_in_endstop_ &&
+        (this->target_position_ == COVER_OPEN || this->target_position_ == COVER_CLOSED)) {
+      // Don't trigger stop, let the cover stop by itself.
+      this->current_operation = COVER_OPERATION_IDLE;
+    } else {
+      this->start_direction_(COVER_OPERATION_IDLE);
+    }
     this->publish_state();
   }
 
