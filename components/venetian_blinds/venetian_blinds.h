@@ -12,6 +12,7 @@ public:
   void loop() override;
   void dump_config() override;
   cover::CoverTraits get_traits() override;
+  void set_has_built_in_endstop(bool value) { this->has_built_in_endstop_ = value; }
   void control(const cover::CoverCall &call) override;
   Trigger<> *get_open_trigger() const { return this->open_trigger; }
   Trigger<> *get_close_trigger() const { return this->close_trigger; }
@@ -31,6 +32,7 @@ protected:
   uint32_t tilt_duration;
   uint32_t actuator_activation_duration;
   bool assumed_state{false};
+  bool has_built_in_endstop_{false};
 
 private:
   uint32_t start_dir_time_{0};
